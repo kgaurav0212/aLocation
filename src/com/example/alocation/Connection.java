@@ -27,17 +27,15 @@ public class Connection extends Activity {
 	static public String BaseURL = "http://192.168.1.32:8090/alocation/";
 
 	@SuppressLint("NewApi")
-	public static JSONObject getObject(String URL,
-			List<NameValuePair> nameValuePairs) {
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-				.permitAll().build();
+	public static JSONObject getObject(String URL, List<NameValuePair> nameValuePairs) {
+		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy);
 
 		URL url;
 		try {
 			url = new URL(BaseURL + URL);
-			HttpURLConnection urlConn = (HttpURLConnection) url
-					.openConnection();
+			HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
 			urlConn.connect();
 			if (HttpURLConnection.HTTP_OK != urlConn.getResponseCode()) {
 				return null;
@@ -56,6 +54,7 @@ public class Connection extends Activity {
 		HttpEntity entity = null;
 		String retSrc = null;
 		JSONObject result = null;
+		
 		try {
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			entity = httpclient.execute(httppost).getEntity();
@@ -69,6 +68,7 @@ public class Connection extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		if (entity != null) {
 			try {
 				retSrc = EntityUtils.toString(entity);

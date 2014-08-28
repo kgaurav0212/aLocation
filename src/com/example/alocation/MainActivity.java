@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,12 +29,25 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	ListView myList;
 	private CustomAdapterCheckBox mAdapter;
-	private ArrayList<LocData> locationData;
+	private ArrayList<LocData> locationData;	//list of Locations
 
-	public static ArrayList<Integer> selectedIds;
+	public static ArrayList<Integer> selectedIds;	//List of Ids of selected checkboxes
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		SharedPreferences prefs1 = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		if( !prefs1.getBoolean("firstTimeLaunch", false))
+		{
+			Intent i = new Intent(this, FirstTime.class);
+			startActivity(i);
+			
+			SharedPreferences.Editor editor = prefs1.edit();
+			editor.putBoolean("firstTimeLaunch", true);
+			editor.commit();
+		}
+		
 		setContentView(R.layout.activity_main);
 
 		myList = null;
@@ -40,7 +55,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		CreateLocData.generateData(); // to create arraylist of locations
 		locationData = CreateLocData.getLocationData(); // to extract data from
-														// class to arraylist
+		// class to arraylist
 
 		mAdapter = new CustomAdapterCheckBox(MainActivity.this, locationData);
 		myList.setAdapter(mAdapter);
@@ -74,20 +89,10 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		Intent i = new Intent(this, BasicMapDemoActivity.class);
 
-		// if( true )
-		// {
-		// CharSequence text="lokesh";
-		// Toast toast = Toast.makeText( getApplicationContext(), text,
-		// Toast.LENGTH_SHORT);
-		// toast.show();
-		//
-		// i.putExtra(COORD1,text );
-		// }
-
 		selectedIds = mAdapter.getSelectedIds();
-		Toast toast = Toast.makeText(getApplicationContext(),
-				selectedIds.toString(), Toast.LENGTH_SHORT);
-		toast.show();
+				Toast toast = Toast.makeText(getApplicationContext(),
+						selectedIds.toString(), Toast.LENGTH_SHORT );
+				toast.show();
 
 		System.out.println("success!!!");
 

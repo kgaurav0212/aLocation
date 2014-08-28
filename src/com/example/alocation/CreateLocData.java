@@ -16,15 +16,20 @@ public class CreateLocData {
 	public static void generateData() {
 
 		arr1 = new ArrayList<LocData>();
+		
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 		nameValuePairs.add(new BasicNameValuePair("key", Connection.key));
+		
 		String URL = "index.php";
+		
 		JSONObject result = Connection.getObject(URL, nameValuePairs);
+		
 		if (result == null) {
 			return;
 		}
 
 		JSONArray location;
+		
 		try {
 			location = result.getJSONArray("location");
 			for (int i = 0; i < location.length(); i++) {
@@ -32,8 +37,7 @@ public class CreateLocData {
 				LocData locData = new LocData();
 				locData.setId(loadData.getInt("id"));
 				locData.setName(loadData.getString("name"));
-				locData.setLatLng(loadData.getDouble("lat"),
-						loadData.getDouble("lng"));
+				locData.setLatLng( loadData.getDouble("lat"), loadData.getDouble("lng"));
 				arr1.add(locData);
 			}
 		} catch (JSONException e) {
