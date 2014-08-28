@@ -43,9 +43,9 @@ public class MainActivity extends Activity implements OnClickListener {
 			Intent i = new Intent(this, FirstTime.class);
 			startActivity(i);
 			
-			SharedPreferences.Editor editor = prefs1.edit();
-			editor.putBoolean("firstTimeLaunch", true);
-			editor.commit();
+//			SharedPreferences.Editor editor = prefs1.edit();
+//			editor.putBoolean("firstTimeLaunch", true);
+//			editor.commit();
 		}
 		
 		setContentView(R.layout.activity_main);

@@ -9,18 +9,19 @@ import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
 
-public class getCurrentLocation extends Activity implements GooglePlayServicesClient.ConnectionCallbacks,
+public class GetCurrentLocation extends Activity implements GooglePlayServicesClient.ConnectionCallbacks,
 GooglePlayServicesClient.OnConnectionFailedListener{
 
-	static LocationClient mLocationClient;
-	static Location mCurrentLocation;
+	 LocationClient mLocationClient;
+	 Location mCurrentLocation;
 	
-	public static Location getLocation(Context c){
-		mLocationClient = new LocationClient(c, null, null );
-		
-		mCurrentLocation = mLocationClient.getLastLocation();
-		return mCurrentLocation;
-	}
+	 private Context c;
+	 public GetCurrentLocation(Context c){
+		 this.c=c;
+		 
+		 getLocation(c);
+	 }
+	
 	
 	
 	@Override
@@ -33,6 +34,12 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 	public void onConnected(Bundle connectionHint) {
 		// TODO Auto-generated method stub
 		
+			mLocationClient = new LocationClient(this , null, null );
+		
+		mCurrentLocation = mLocationClient.getLastLocation(); 
+		
+		
+		
 	}
 
 	@Override
@@ -40,6 +47,13 @@ GooglePlayServicesClient.OnConnectionFailedListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public Location getLocation(Context c){
+		
+		return mCurrentLocation;
+	}
+	
+	
 
 	
 	

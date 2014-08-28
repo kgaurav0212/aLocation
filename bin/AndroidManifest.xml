@@ -48,6 +48,11 @@
             android:label="basic_demo"
             >
         </activity>
+        <activity
+            android:name=".FirstTime"
+            android:label="basic_demo"
+            >
+        </activity>
         
     </application>
 
