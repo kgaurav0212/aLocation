@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.example.alocation.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,31 +13,30 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-
-
+import android.widget.TextView;
 
 public class CustomAdapterCheckBox extends BaseAdapter {
-
 
 	private LayoutInflater mInflater;
 	ArrayList<Integer> selectedIds = new ArrayList<Integer>();
 	ArrayList<LocData> locationData;
 
 	public CustomAdapterCheckBox(Context c, ArrayList<LocData> locationData1) {
-		mInflater = (LayoutInflater)  c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		locationData = locationData1;
+		mInflater = (LayoutInflater) c
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.locationData = locationData1;
 	}
 
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return locationData.size();
+		return this.locationData.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
 		// TODO Auto-generated method stub
-		return locationData.get(arg0);
+		return this.locationData.get(arg0);
 	}
 
 	@Override
@@ -45,6 +45,7 @@ public class CustomAdapterCheckBox extends BaseAdapter {
 		return arg0;
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
@@ -53,20 +54,18 @@ public class CustomAdapterCheckBox extends BaseAdapter {
 		}
 
 		CheckBox check1 = (CheckBox) convertView.findViewById(R.id.checkBox1);
-
-		//check1.setText(locationData.get(position).getName());
-		//check1.setId(locationData.get(position).getId());
-
-
+		check1.setText(this.locationData.get(position).getName());
+		check1.setId(this.locationData.get(position).getId());
 		final int index = position;
 		check1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
 				if (isChecked) {
-					selectedIds.add( index );
-				}else{
-					selectedIds.remove(  selectedIds.lastIndexOf( index ) );
+					selectedIds.add(index);
+				} else {
+					selectedIds.remove(selectedIds.lastIndexOf(index));
 				}
 
 			}
@@ -76,9 +75,8 @@ public class CustomAdapterCheckBox extends BaseAdapter {
 		return convertView;
 	}
 
-	public ArrayList<Integer> getSelectedIds(){
+	public ArrayList<Integer> getSelectedIds() {
 		return selectedIds;
 	}
-
 
 }
